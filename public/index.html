@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WA Distribution Engine - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b1120; color: #f1f5f9; }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+  <div class="max-w-7xl mx-auto space-y-6">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-start md:items-center bg-slate-900/80 backdrop-blur p-6 rounded-2xl border border-slate-800 shadow-xl">
+      <div>
+        <div class="flex items-center space-x-3">
+          <div class="p-3 bg-blue-600/20 text-blue-400 rounded-xl border border-blue-500/30">
+            <i class="fa-solid fa-truck-fast text-2xl"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight text-white">WA Distribution Engine</h1>
+            <p class="text-sm text-slate-400">Order Otomatis, Anti-Fraud Bukti Transfer OCR & Accurate Online</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 md:mt-0 flex items-center space-x-3">
+        <div id="wahaBadge" class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-950/60 border border-amber-800 text-amber-400 flex items-center space-x-2">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span>WhatsApp: Memeriksa...</span>
+        </div>
+        <div id="accurateBadge" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700">
+          <span>Accurate: Standby</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Kolom 1: WhatsApp Gateway Status -->
+      <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800 flex flex-col items-center text-center">
+        <h2 class="text-lg font-bold text-white mb-2 flex items-center space-x-2">
+          <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+          <span>Koneksi WhatsApp Distribusi</span>
+        </h2>
+        <p class="text-xs text-slate-400 mb-4">Port: 3000 | Engine: Baileys NOWEB</p>
+        
+        <div id="qrContainer" class="w-48 h-48 bg-slate-950 rounded-xl border border-dashed border-slate-800 flex items-center justify-center p-2 mb-4">
+          <div class="text-xs text-slate-500">Memuat QR Code...</div>
+        </div>
+
+        <p id="sessionStatusText" class="text-sm font-semibold text-slate-300 mb-4">Status: Memeriksa...</p>
+
+        <div class="flex space-x-2 w-full">
+          <button onclick="refreshQr()" class="flex-1 py-2 px-3 bg-slate-800 hover:bg-slate-700 text-xs font-semibold rounded-xl border border-slate-700 transition">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Refresh QR
+          </button>
+          <button onclick="logoutSession()" class="py-2 px-3 bg-rose-950/40 hover:bg-rose-900/50 text-rose-400 text-xs font-semibold rounded-xl border border-rose-800 transition">
+            Disconnect
+          </button>
+        </div>
+      </div>
+
+      <!-- Kolom 2 & 3: Aktivitas Order & Struk OCR -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- Live Orders -->
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+              <i class="fa-solid fa-clipboard-list text-blue-400"></i>
+              <span>Pesanan Masuk Terbaru</span>
+            </h2>
+            <button onclick="loadOrders()" class="text-xs text-blue-400 hover:underline">Refresh</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-950/50 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                <tr>
+                  <th class="p-3">Order No</th>
+                  <th class="p-3">Customer</th>
+                  <th class="p-3">Qty</th>
+                  <th class="p-3">Total</th>
+                  <th class="p-3">Status</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody" class="divide-y divide-slate-800/60">
+                <tr><td colspan="5" class="p-4 text-center text-slate-500">Belum ada pesanan terbaru</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Bukti Transfer OCR & Anti Fraud -->
+        <div class="bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+              <i class="fa-solid fa-receipt text-emerald-400"></i>
+              <span>Verifikasi Struk OCR (Anti-Fraud)</span>
+            </h2>
+            <button onclick="loadReceipts()" class="text-xs text-emerald-400 hover:underline">Refresh</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-950/50 text-slate-400 uppercase font-semibold border-b border-slate-800">
+                <tr>
+                  <th class="p-3">Waktu</th>
+                  <th class="p-3">Bank</th>
+                  <th class="p-3">Pengirim</th>
+                  <th class="p-3">Nominal</th>
+                  <th class="p-3">No. Referensi</th>
+                  <th class="p-3">Hasil</th>
+                </tr>
+              </thead>
+              <tbody id="receiptTableBody" class="divide-y divide-slate-800/60">
+                <tr><td colspan="6" class="p-4 text-center text-slate-500">Belum ada verifikasi struk</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function checkStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        
+        const wahaBadge = document.getElementById('wahaBadge');
+        const sessionText = document.getElementById('sessionStatusText');
+        if (data.waha?.session?.status === 'WORKING') {
+          wahaBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 border border-emerald-800 text-emerald-400 flex items-center space-x-2';
+          wahaBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span><span>WhatsApp Terhubung</span>';
+          sessionText.textContent = 'Terhubung (' + (data.waha.session.me?.pushName || 'Armada') + ')';
+        } else {
+          wahaBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-amber-950/60 border border-amber-800 text-amber-400 flex items-center space-x-2';
+          wahaBadge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-400"></span><span>Status: ${data.waha?.session?.status || 'Scan Diperlukan'}</span>`;
+          sessionText.textContent = data.waha?.session?.status || 'Scan Diperlukan';
+        }
+
+        const accurateBadge = document.getElementById('accurateBadge');
+        if (data.accurate?.connected) {
+          accurateBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800';
+          accurateBadge.textContent = 'Accurate: Aktif';
+        } else {
+          accurateBadge.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700';
+          accurateBadge.textContent = 'Accurate: Standby';
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    async function refreshQr() {
+      const container = document.getElementById('qrContainer');
+      container.innerHTML = '<div class="text-xs text-slate-400">Mengambil QR Code...</div>';
+      try {
+        const res = await fetch('/api/qr');
+        const data = await res.json();
+        if (data.qr) {
+          container.innerHTML = `<img src="${data.qr}" class="w-44 h-44 rounded-lg bg-white p-2 shadow-lg" alt="QR Code">`;
+        } else {
+          container.innerHTML = '<div class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check text-2xl block mb-2"></i>WhatsApp Sudah Terhubung!</div>';
+        }
+      } catch (err) {
+        container.innerHTML = '<div class="text-xs text-rose-400">Gagal memuat QR Code.</div>';
+      }
+    }
+
+    async function logoutSession() {
+      if (!confirm('Putuskan WhatsApp Distribusi yang terhubung?')) return;
+      document.getElementById('qrContainer').innerHTML = '<div class="text-xs text-amber-400">Memutuskan...</div>';
+      await fetch('/api/logout-waha', { method: 'POST' });
+      setTimeout(refreshQr, 2000);
+    }
+
+    async function loadOrders() {
+      try {
+        const res = await fetch('/api/orders');
+        const orders = await res.json();
+        const tbody = document.getElementById('orderTableBody');
+        if (!orders || orders.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-slate-500">Belum ada pesanan</td></tr>';
+          return;
+        }
+        tbody.innerHTML = orders.map(o => `
+          <tr class="hover:bg-slate-800/40">
+            <td class="p-3 font-mono font-semibold text-white">${o.order_no}</td>
+            <td class="p-3">${o.customer_phone}</td>
+            <td class="p-3">${o.quantity} Galon</td>
+            <td class="p-3 font-semibold text-emerald-400">Rp ${Number(o.total_amount).toLocaleString('id-ID')}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${o.payment_status === 'LUNAS' ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-amber-950 text-amber-400 border border-amber-800'}">${o.payment_status}</span></td>
+          </tr>
+        `).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    async function loadReceipts() {
+      try {
+        const res = await fetch('/api/receipts');
+        const receipts = await res.json();
+        const tbody = document.getElementById('receiptTableBody');
+        if (!receipts || receipts.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-slate-500">Belum ada struk</td></tr>';
+          return;
+        }
+        tbody.innerHTML = receipts.map(r => `
+          <tr class="hover:bg-slate-800/40">
+            <td class="p-3 text-slate-400">${new Date(r.created_at).toLocaleTimeString('id-ID')}</td>
+            <td class="p-3 font-semibold">${r.bank_name || '-'}</td>
+            <td class="p-3">${r.sender_name || '-'}</td>
+            <td class="p-3 font-semibold text-emerald-400">Rp ${Number(r.amount).toLocaleString('id-ID')}</td>
+            <td class="p-3 font-mono text-[11px]">${r.reference_number || '-'}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-semibold ${r.is_valid ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}">${r.is_valid ? 'VALID' : 'INVALID'}</span></td>
+          </tr>
+        `).join('');
+      } catch (e) { console.error(e); }
+    }
+
+    setInterval(checkStatus, 5000);
+    checkStatus();
+    refreshQr();
+    loadOrders();
+    loadReceipts();
+  </script>
+</body>
+</html>
