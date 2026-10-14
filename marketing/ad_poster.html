@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WA Distribution Engine - Product Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #060911;
+      color: #f8fafc;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glow-cyan {
+      box-shadow: 0 0 50px -10px rgba(6, 182, 212, 0.25);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.25);
+    }
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10b981, #34d399, transparent);
+      box-shadow: 0 0 15px #10b981;
+      animation: scan 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes scan {
+      0% { top: 0%; opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { top: 100%; opacity: 0.3; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 md:p-8">
+
+  <!-- Main Canvas (16:9 / Presentation Ratio) -->
+  <div class="w-full max-w-6xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/80 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden glow-cyan">
+    
+    <!-- Background Ambient Glow & Grid -->
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 pb-6 border-b border-slate-800/60 relative z-10 gap-4">
+      <div>
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span>Self-Hosted WhatsApp Business Automation</span>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white">
+          WA Distribution <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Engine</span>
+        </h1>
+        <p class="text-slate-400 text-sm md:text-base mt-1.5 max-w-xl">
+          Automate orders, reject fake transfer receipts with offline computer vision, and sync inventory in real-time.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 self-start md:self-auto">
+        <span class="px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-semibold flex items-center space-x-1.5">
+          <i class="fa-solid fa-server text-cyan-400"></i>
+          <span>100% On-Premise</span>
+        </span>
+        <span class="px-3 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-400 text-xs font-semibold flex items-center space-x-1.5">
+          <i class="fa-solid fa-ban text-emerald-400"></i>
+          <span>Zero Monthly SaaS Fees</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Bento Grid Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+
+      <!-- Left Card: Live Interactive WhatsApp Mockup (7 Columns) -->
+      <div class="lg:col-span-7 bg-slate-950/70 border border-slate-800/80 rounded-2xl p-6 flex flex-col justify-between shadow-xl">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-800/60 mb-5">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm border border-emerald-500/30">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+            </div>
+            <div>
+              <div class="font-bold text-sm text-white flex items-center space-x-1.5">
+                <span>Distribution Bot</span>
+                <i class="fa-solid fa-circle-check text-emerald-400 text-xs"></i>
+              </div>
+              <div class="text-[11px] text-emerald-400 font-medium">Baileys WebSocket • Always Online</div>
+            </div>
+          </div>
+          <span class="px-2.5 py-1 rounded-md text-[10px] font-mono font-semibold bg-slate-800 text-slate-300">Port 3000 NOWEB</span>
+        </div>
+
+        <!-- Chat Flow Container -->
+        <div class="space-y-3.5 text-xs">
+          <!-- User Bubble -->
+          <div class="flex justify-end">
+            <div class="bg-emerald-600/20 border border-emerald-500/30 text-emerald-100 rounded-2xl rounded-tr-sm px-4 py-2.5 max-w-xs">
+              <div class="font-semibold text-[10px] text-emerald-400 mb-0.5">Customer (Toko Berkah)</div>
+              Pesan 20 Galon ke Jl. MT Haryono No. 15 ya min.
+            </div>
+          </div>
+
+          <!-- Bot Invoice Bubble -->
+          <div class="flex justify-start">
+            <div class="bg-slate-900 border border-slate-800 text-slate-200 rounded-2xl rounded-tl-sm p-3.5 max-w-sm space-y-2">
+              <div class="flex justify-between items-center text-[10px] font-semibold text-slate-400 pb-1 border-b border-slate-800">
+                <span>ORD-883921</span>
+                <span class="text-amber-400 font-mono">WAITING_PAYMENT</span>
+              </div>
+              <div class="space-y-1 font-mono text-[11px]">
+                <div class="flex justify-between"><span>📦 20 Galon @ 15.000</span> <span class="text-white font-bold">Rp 300.000</span></div>
+                <div class="text-slate-400 text-[10px]">🏦 BCA: 1234567890 (PT Sumber Segar)</div>
+              </div>
+              <div class="text-[10px] text-slate-400 italic pt-1 border-t border-slate-800/60">
+                Kirim screenshot bukti transfer untuk verifikasi otomatis.
+              </div>
+            </div>
+          </div>
+
+          <!-- User Uploads Receipt + Live OCR Scan Effect -->
+          <div class="flex justify-end">
+            <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-2xl p-3 max-w-xs space-y-2 relative overflow-hidden">
+              <div class="scan-line"></div>
+              <div class="flex items-center space-x-2 text-[10px] text-emerald-400 font-semibold">
+                <i class="fa-solid fa-expand animate-pulse"></i>
+                <span>Tesseract OCR Analyzing (3.2s)...</span>
+              </div>
+              <!-- Receipt Simulation Card -->
+              <div class="bg-white rounded-lg p-2.5 text-slate-900 font-mono text-[10px] space-y-1 shadow-inner">
+                <div class="flex justify-between font-bold border-b pb-1 text-blue-900">
+                  <span>m-BCA TRANSFER</span>
+                  <span class="text-emerald-700">BERHASIL</span>
+                </div>
+                <div class="flex justify-between text-[9px] text-slate-600"><span>14/10/26 10:45</span> <span>REF: 9527120261</span></div>
+                <div class="text-slate-700">KE: PT SUMBER SEGAR ABADI</div>
+                <div class="text-xs font-bold text-slate-900 pt-1">Rp 300.000,00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bot Instant Verification Success -->
+          <div class="flex justify-start">
+            <div class="bg-gradient-to-r from-emerald-950/80 to-slate-900 border border-emerald-500/40 text-emerald-200 rounded-2xl rounded-tl-sm p-3.5 max-w-sm space-y-1.5 shadow-lg">
+              <div class="flex items-center space-x-1.5 text-emerald-400 font-bold text-[11px]">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>PEMBAYARAN TERVERIFIKASI & LUNAS</span>
+              </div>
+              <p class="text-[10px] text-slate-300 leading-relaxed">
+                Nominal cocok (Rp 300.000). Nomor referensi unik tercatat. Pesanan masuk jadwal rute armada hari ini! 🚚
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 3 Feature Cards (5 Columns) -->
+      <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+        
+        <!-- Card 1: Offline Computer Vision -->
+        <div class="bg-slate-950/70 border border-slate-800/80 rounded-2xl p-5 hover:border-cyan-500/40 transition duration-300">
+          <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg mb-3">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <h3 class="text-white font-bold text-base mb-1">Computer Vision OCR (100% Offline)</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Membaca nama bank, penerima, nominal, dan nomor referensi struk mutasi secara instan tanpa mengirim data transaksi ke cloud luar.
+          </p>
+        </div>
+
+        <!-- Card 2: Anti-Fraud Tamper Detection -->
+        <div class="bg-slate-950/70 border border-slate-800/80 rounded-2xl p-5 hover:border-emerald-500/40 transition duration-300">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg mb-3">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="text-white font-bold text-base mb-1">Anti-Fraud & Duplicate Shield</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Menolak otomatis struk editan font, nominal kurang, dan struk bekas yang diunggah berulang kali oleh oknum.
+          </p>
+        </div>
+
+        <!-- Card 3: Accurate ERP Ready -->
+        <div class="bg-slate-950/70 border border-slate-800/80 rounded-2xl p-5 hover:border-blue-500/40 transition duration-300">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-3">
+            <i class="fa-solid fa-boxes-packing"></i>
+          </div>
+          <h3 class="text-white font-bold text-base mb-1">Accurate Online ERP Standby</h3>
+          <p class="text-slate-400 text-xs leading-relaxed">
+            Otomatis sinkronisasi Sales Order (SO) dan Sales Receipt ke modul akuntansi bisnis saat pembayaran terverifikasi.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Footer Bar -->
+    <div class="mt-8 pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-3">
+      <div class="flex items-center space-x-4">
+        <span><i class="fa-brands fa-node-js text-emerald-400 mr-1"></i> Node.js 22</span>
+        <span><i class="fa-brands fa-docker text-blue-400 mr-1"></i> Docker WSL2</span>
+        <span><i class="fa-solid fa-database text-amber-400 mr-1"></i> SQLite3</span>
+      </div>
+      <div class="font-mono text-slate-400">
+        github.com/C0ckr4ch/wa-distribution-engine
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
